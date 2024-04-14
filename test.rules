@@ -1,0 +1,18 @@
+# alert tcp any any -> any any (msg:"테스트 규칙"; content:"테스트"; sid:1000001;)
+# alert: 규칙이 일치할 때 취할 작업으로 이 경우엔 경고를 생성
+# tcp: 일치시킬 프로토콜을 지정한다.
+# any any: 소스 및 대상 IP 주소 및 포트를 저으이한다. 이 예제에는 모든 소스 IP와 포트에서 모든 대상 IP와 포트로 트래픽을 일치시킨다.
+# msg:"테스트 규칙": 규칙이 트리거될 때 경고에 포함될 메시지를 제공한다.
+# content:"테스트": 트래픽 페이로드에서 찾을 내용을 지정한다. 예에서는 "테스트" 문자열을 찾는다.
+# sid10001: 규칙의 고유 식별자이다. 모든 규칙에서 고유해야 한다.
+# rev:1: 규칙의 버전을 지정한다. 일반적으로 이 옵션은 규칙이 업데이트되거나 변경될 때 사용된다.
+
+alert tcp any any -> any 80 (msg:"gilgil.net access"; content:"GET /"; content:"Host: "; content:"gilgil.net"; sid:10001; rev:1;)
+alert tcp any any -> any 80 (msg:"netflix.com access"; content:"GET /"; content:"Host: "; content:"netflix.com"; sid:10002; rev:1;)
+alert tcp any any -> any 80 (msg:"qt.io access"; content:"GET /"; content:"Host: "; content:"qt.io"; sid:10003; rev:1;)
+
+alert tcp any any -> any 80 (msg:"httpforever.com access"; content:"GET /"; content:"Host: "; content:"httpforever.com"; sid:10004; rev:1;)
+
+# HTTPS 통신은 암호화되어 있기에 통신 내용을 직접 읽을수 없다. 하지만 HTTPS 통신의 특정 속성을 이용해 간접적으로 탐지할 수 있다.
+
+alert tls any any -> any any (msg:"naver.com access"; tls.sni; content:"naver.com"; sid:1000005; rev:1;)
