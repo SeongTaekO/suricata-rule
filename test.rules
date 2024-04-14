@@ -16,3 +16,5 @@ alert tcp any any -> any 80 (msg:"httpforever.com access"; content:"GET /"; cont
 # HTTPS 통신은 암호화되어 있기에 통신 내용을 직접 읽을수 없다. 하지만 HTTPS 통신의 특정 속성을 이용해 간접적으로 탐지할 수 있다.
 
 alert tls any any -> any any (msg:"naver.com access"; tls.sni; content:"naver.com"; sid:1000005; rev:1;)
+alert tls any any -> any any (msg:"match cert NotBefore"; tls_cert_notbefore:1998-05-01<>2024-02-27; sid:1000007; rev:1;)
+
